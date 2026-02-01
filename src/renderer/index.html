@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Electron</title>
+
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <!-- <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:" /> -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    img {
+      -webkit-user-drag: none;
+      /* Chrome/Safari等WebKit浏览器 */
+      -moz-user-drag: none;
+      /* Firefox */
+      -ms-user-drag: none;
+      /* IE/Edge */
+      /* user-drag: none; */
+      /* 标准属性，未来浏览器会支持 */
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+  <!-- <script>
+    if (process.env.NODE_ENV === 'development') {
+      window.__VUE_DEVTOOLS_HOST__ = 'localhost'
+      window.__VUE_DEVTOOLS_PORT__ = '8098'
+    }
+  </script> -->
+  <script src="http://localhost:8098"></script>
+</body>
+
+</html>
