@@ -5,25 +5,26 @@
                 <el-tabs type="border-card">
                     <el-tab-pane label="角色列表">
                         <el-card class="card-container">
-                            <el-form>
+                            <el-form :model="roleForm">
                                 <el-row :gutter="15">
                                     <el-col :span="8">
                                         <el-form-item label="角色名称">
-                                            <el-input placeholder="请输入角色名称"></el-input>
+                                            <el-input placeholder="请输入角色名称" v-model="roleForm.roleName"></el-input>
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="7">
                                         <el-form-item label="角色编码">
-                                            <el-input placeholder="请输入角色编码"></el-input>
+                                            <el-input placeholder="请输入角色编码" v-model="roleForm.rolePerm"></el-input>
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="9">
                                         <el-form-item label="状态">
-                                            <el-select placeholder="请选择启用状态">
+                                            <el-select placeholder="请选择启用状态" v-model="roleForm.enabled">
                                                 <el-option
                                                     v-for="item in dicts.system_global_status"
                                                     :key="item.id"
-                                                    :value="item.k"
+                                                    :label="item.k"
+                                                    :value="item.v"
                                                 ></el-option>
                                                 
                                             </el-select>
@@ -32,8 +33,8 @@
 
                                     <el-col :span="8">
                                         <el-form-item>
-                                            <el-button icon="search" type="primary">搜索</el-button>
-                                            <el-button icon="refreshLeft">重置</el-button>
+                                            <el-button icon="search" type="primary" @click="getRolePage">搜索</el-button>
+                                            <el-button icon="refreshLeft" @click="resetPage">重置</el-button>
                                         </el-form-item>
                                     </el-col>
                                 </el-row>
@@ -49,7 +50,8 @@
                                 <el-table-column prop="rolePerm" label="权限字符" align="center"></el-table-column>
                                 <el-table-column  label="是否启用" align="center">
                                     <template #default="{row}">
-                                        <el-tag>{{ row.enabled == '1' ? '启用' : '禁用' }}</el-tag>
+                                        <el-tag v-if="row.enabled == 1" type="primary">{{ row.enabled == '1' ? '启用' : '禁用' }}</el-tag>
+                                        <el-tag v-else type="danger">{{ row.enabled == '1' ? '启用' : '禁用' }}</el-tag>
                                     </template>
                                 </el-table-column>
                                 <el-table-column prop="createTime" label="创建时间" align="center" :formatter="formatter"></el-table-column>
@@ -81,20 +83,35 @@ import { useDictsService } from '@plugins/useDicts'
 const { dicts, getDicts} = useDictsService()
 
 const tableData = ref<Role[]>([])
+const roleForm = ref({
+        current: '1',
+        size: '10',
+        roleName: '',
+        rolePerm: '',
+        enabled: '',
+    })
 
 onBeforeMount(()=>{
     getRolePage()
 })
 
 const getRolePage = async ()=>{
-    let res = await rolePage({
-        current: '1',
-        size: '10'
-    })
+    let res = await rolePage(roleForm.value)
 
     let { records } = res.data
 
     tableData.value = records
+}
+
+const resetPage = ()=>{
+    roleForm.value = {
+        current: '1',
+        size: '10',
+        roleName: '',
+        rolePerm: '',
+        enabled: '',
+    }
+    getRolePage()
 }
 
 getDicts(['system_global_status','system_global_gender'])
