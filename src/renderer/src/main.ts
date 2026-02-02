@@ -17,9 +17,11 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 
+import useDicts from '@plugins/useDicts'
+
 import 'element-plus/theme-chalk/index.css'
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 
-app.use(pinia).use(router).use(ElementPlus).mount('#app')
+app.use(pinia).use(router).use(ElementPlus).use(useDicts).mount('#app')

@@ -45,6 +45,9 @@
       ],
       "@layout/*": [
         "src/renderer/src/layout/*"
+      ],
+      "@plugins/*": [
+        "src/renderer/src/plugins/*"
       ]
     }
   }

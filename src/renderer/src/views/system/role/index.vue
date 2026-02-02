@@ -20,8 +20,12 @@
                                     <el-col :span="9">
                                         <el-form-item label="状态">
                                             <el-select placeholder="请选择启用状态">
-                                                <el-option>启用</el-option>
-                                                <el-option>禁用</el-option>
+                                                <el-option
+                                                    v-for="item in dicts.system_global_status"
+                                                    :key="item.id"
+                                                    :value="item.k"
+                                                ></el-option>
+                                                
                                             </el-select>
                                         </el-form-item>
                                     </el-col>
@@ -73,6 +77,8 @@ import { rolePage, Role } from '@api/role'
 import { ref, onBeforeMount } from 'vue'
 import type { TableColumnCtx } from 'element-plus'
 import tool from '@utils/tool'
+import { useDictsService } from '@plugins/useDicts'
+const { dicts, getDicts} = useDictsService()
 
 const tableData = ref<Role[]>([])
 
@@ -91,7 +97,11 @@ const getRolePage = async ()=>{
     tableData.value = records
 }
 
-const formatter = (row: Role , column: TableColumnCtx<Role>,timeValue: number)=> {
+getDicts(['system_global_status','system_global_gender'])
+
+console.log(dicts)
+
+const formatter = (_: Role , __: TableColumnCtx<Role>,timeValue: number)=> {
     return tool.dateFormat( timeValue )
 }
 

@@ -22,6 +22,7 @@ export default defineConfig({
         '@views': resolve('src/renderer/src/views'),
         '@hooks': resolve('src/renderer/src/hooks'),
         '@layout': resolve('src/renderer/src/layout'),
+        '@plugins': resolve('src/renderer/src/plugins'),
       }
     },
     plugins: [
