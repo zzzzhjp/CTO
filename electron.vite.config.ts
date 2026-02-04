@@ -23,6 +23,7 @@ export default defineConfig({
         '@hooks': resolve('src/renderer/src/hooks'),
         '@layout': resolve('src/renderer/src/layout'),
         '@plugins': resolve('src/renderer/src/plugins'),
+        '@locales': resolve('src/renderer/src/locales'),
       }
     },
     plugins: [

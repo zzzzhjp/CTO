@@ -65,6 +65,22 @@
                                     <!-- </template> -->
                                 </el-table-column>
                             </el-table>
+                            <!-- <div class="pagination">
+                                <el-pagination
+                                    v-model:current-page="currentPage"
+                                    v-model:page-size="pageSize"
+                                    :page-sizes="[20, 50, 100, 200]"
+                                    layout="total, sizes, prev, pager, next, jumper"
+                                    :total="totals"
+                                    @size-change="handleSizeChange"
+                                    @current-change="handleCurrentChange"
+                                />
+                            </div> -->
+                            <pagination
+                                :total="totals"
+                                @update:current-page="handleCurrentPageChange"
+                                @update:page-size="handlePageSizeChange"
+                            ></pagination>
                         </el-card>
                     </el-tab-pane>
                     <el-tab-pane label="回收站">2</el-tab-pane>
@@ -83,9 +99,11 @@ import { useDictsService } from '@plugins/useDicts'
 const { dicts, getDicts} = useDictsService()
 
 const tableData = ref<Role[]>([])
+const totals = ref(0)
+
 const roleForm = ref({
-        current: '1',
-        size: '10',
+        current: 1,
+        size: 10,
         roleName: '',
         rolePerm: '',
         enabled: '',
@@ -98,15 +116,16 @@ onBeforeMount(()=>{
 const getRolePage = async ()=>{
     let res = await rolePage(roleForm.value)
 
-    let { records } = res.data
+    let { records , total} = res.data
 
+    totals.value = total
     tableData.value = records
 }
 
 const resetPage = ()=>{
     roleForm.value = {
-        current: '1',
-        size: '10',
+        current: 1,
+        size: 10,
         roleName: '',
         rolePerm: '',
         enabled: '',
@@ -116,12 +135,19 @@ const resetPage = ()=>{
 
 getDicts(['system_global_status','system_global_gender'])
 
-console.log(dicts)
-
 const formatter = (_: Role , __: TableColumnCtx<Role>,timeValue: number)=> {
     return tool.dateFormat( timeValue )
 }
 
+const handleCurrentPageChange =( page: number)=>{
+    roleForm.value.current = page
+    getRolePage()
+}
+
+const handlePageSizeChange = ( page:number )=>{
+    roleForm.value.size = page
+    getRolePage()
+}
 </script>
 
 <style lang="scss" scoped>
@@ -131,5 +157,11 @@ const formatter = (_: Role , __: TableColumnCtx<Role>,timeValue: number)=> {
 
 .toolbar{
     margin-bottom: 15px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
 }
 </style>

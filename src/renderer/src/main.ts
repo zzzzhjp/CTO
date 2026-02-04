@@ -24,4 +24,18 @@ import 'element-plus/theme-chalk/index.css'
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 
-app.use(pinia).use(router).use(ElementPlus).use(useDicts).mount('#app')
+//国际化
+import i18n from '@locales/index'
+
+//全局组件
+import pagination from '@components/Pagination/index.vue'
+app.component('pagination',pagination)
+
+
+app
+    .use(pinia)
+    .use(router)
+    .use(ElementPlus)
+    .use(useDicts)
+    .use(i18n)
+    .mount('#app')

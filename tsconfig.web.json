@@ -8,6 +8,8 @@
   ],
   "compilerOptions": {
     "composite": true,
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
     "baseUrl": ".",
     "paths": {
       "@*": [
@@ -48,6 +50,9 @@
       ],
       "@plugins/*": [
         "src/renderer/src/plugins/*"
+      ],
+      "@locales/*": [
+        "src/renderer/src/locales/*"
       ]
     }
   }

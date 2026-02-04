@@ -1,8 +1,8 @@
 import http from "@utils/request";
 
 interface Irole {
-    current: string
-    size: string
+    current: number
+    size: number
     roleName?: string
     rolePerm?: string
     enabled?: string
