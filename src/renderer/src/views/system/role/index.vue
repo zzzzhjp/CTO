@@ -42,7 +42,7 @@
                         </el-card>
                         <el-card>
                             <div class="toolbar">
-                                <el-button icon="plus" type="primary">新增</el-button>
+                                <el-button icon="plus" type="primary" @click="handleDialogChange">新增</el-button>
                             </div>
                             <el-table :data="tableData" border>
                                 <el-table-column type="selection"></el-table-column>
@@ -65,17 +65,6 @@
                                     <!-- </template> -->
                                 </el-table-column>
                             </el-table>
-                            <!-- <div class="pagination">
-                                <el-pagination
-                                    v-model:current-page="currentPage"
-                                    v-model:page-size="pageSize"
-                                    :page-sizes="[20, 50, 100, 200]"
-                                    layout="total, sizes, prev, pager, next, jumper"
-                                    :total="totals"
-                                    @size-change="handleSizeChange"
-                                    @current-change="handleCurrentChange"
-                                />
-                            </div> -->
                             <pagination
                                 :total="totals"
                                 @update:current-page="handleCurrentPageChange"
@@ -86,6 +75,10 @@
                     <el-tab-pane label="回收站">2</el-tab-pane>
                 </el-tabs>
             </el-main>
+            <role-dialog
+                v-if="dialogVisible"
+                v-model:dialogVisible="dialogVisible"
+            ></role-dialog>
         </el-container>
     </div>
 </template>
@@ -94,12 +87,15 @@
 import { rolePage, Role } from '@api/role'
 import { ref, onBeforeMount } from 'vue'
 import type { TableColumnCtx } from 'element-plus'
+import roleDialog from './roleDialog.vue'
+
 import tool from '@utils/tool'
 import { useDictsService } from '@plugins/useDicts'
 const { dicts, getDicts} = useDictsService()
 
 const tableData = ref<Role[]>([])
 const totals = ref(0)
+
 
 const roleForm = ref({
         current: 1,
@@ -147,6 +143,12 @@ const handleCurrentPageChange =( page: number)=>{
 const handlePageSizeChange = ( page:number )=>{
     roleForm.value.size = page
     getRolePage()
+}
+
+const dialogVisible = ref<boolean>(false)
+
+const handleDialogChange = ()=>{
+    dialogVisible.value = true
 }
 </script>
 
