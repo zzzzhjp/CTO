@@ -1,7 +1,7 @@
 <template>
     <el-dialog
         v-model="dialogVisible"
-        title="Tips"
+        :title="roleUpdateId!='' ? '修改角色' : '新增角色' "
         width="500"
         @close="close"
     >

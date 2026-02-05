@@ -56,13 +56,13 @@
                                 </el-table-column>
                                 <el-table-column prop="createTime" label="创建时间" align="center" :formatter="formatter"></el-table-column>
                                 <el-table-column label="操作" align="center" width="220" fixed="right">
-                                    <!-- <template #defualt="{ row }"> -->
+                                    <template #default="{ row }">
                                         <div class="sys-table-main-actions">
-                                            <el-link icon="edit" type="primary" underline="never">编辑</el-link>
-                                            <el-link icon="delete" type="danger" underline="never" style="margin: 0 8px;">删除</el-link>
+                                            <el-link icon="edit" type="primary" underline="never" @click="handleDialogChange(row.id)">编辑</el-link>
+                                            <el-link icon="delete" type="danger" underline="never" style="margin: 0 8px;" @click="roleDel">删除</el-link>
                                             <router-link class="el-link el-link--error" type="success" to="/">分配用户</router-link>
                                         </div>
-                                    <!-- </template> -->
+                                    </template>
                                 </el-table-column>
                             </el-table>
                             <pagination
@@ -85,10 +85,11 @@
 </template>
 
 <script setup lang="ts">
-import { rolePage, Role } from '@api/role'
+import { rolePage, Role, roleDelete } from '@api/role'
 import { ref, onBeforeMount } from 'vue'
 import type { TableColumnCtx } from 'element-plus'
 import roleDialog from './roleDialog.vue'
+import { ElMessage , ElMessageBox } from 'element-plus'
 
 import tool from '@utils/tool'
 import { useDictsService } from '@plugins/useDicts'
@@ -147,11 +148,36 @@ const handlePageSizeChange = ( page:number )=>{
 }
 
 const dialogVisible = ref<boolean>(false)
-const roleUpdateId = ref<string>('') // Add this line to define roleUpdateId
+const roleUpdateId = ref<string>('') 
 
-const handleDialogChange = ()=>{
-    dialogVisible.value = true
-    roleUpdateId.value = '' // Set to empty or a specific id as needed
+const handleDialogChange = ( id:string )=>{
+    if( typeof id=='string' ){
+        roleUpdateId.value = id;
+    }else{
+        roleUpdateId.value = '';
+    }
+    dialogVisible.value = true;
+}
+
+const roleDel = ( id:string )=>{
+    ElMessageBox.confirm('是否删除角色',{
+        type:'error',
+        confirmButtonText:'删除'
+    }).then(async ()=>{
+        let res = await roleDelete( id );
+        console.log(res);
+        if( res.code !='200' ) return;
+        ElMessage({
+            type:'success',
+            message:'删除成功'
+        })
+        getRolePage();
+    }).catch(()=>{
+        ElMessage({
+            type:'info',
+            message:'取消删除'
+        })
+    })
 }
 </script>
 
