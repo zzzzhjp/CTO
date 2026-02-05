@@ -78,6 +78,7 @@
             <role-dialog
                 v-if="dialogVisible"
                 v-model:dialogVisible="dialogVisible"
+                :roleUpdateId="roleUpdateId"
             ></role-dialog>
         </el-container>
     </div>
@@ -146,9 +147,11 @@ const handlePageSizeChange = ( page:number )=>{
 }
 
 const dialogVisible = ref<boolean>(false)
+const roleUpdateId = ref<string>('') // Add this line to define roleUpdateId
 
 const handleDialogChange = ()=>{
     dialogVisible.value = true
+    roleUpdateId.value = '' // Set to empty or a specific id as needed
 }
 </script>
 

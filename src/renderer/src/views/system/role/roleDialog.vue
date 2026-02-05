@@ -55,13 +55,11 @@
 
                 <el-form-item label="备注">
                     <el-input
-                        :data="permission.treeList"
-                        :props="permission.treeProps"
-                        :check-strictly="!permission.linkage"
-                        :default-expand-all="permission.openAll"
-                        show-checkbox
-                        node-key="id"
-                        class="tree"
+                        type="textarea" 
+                        placeholder="请输入备注内容"
+                        v-model='roleForm.descript'
+                        :maxlength="200"
+                        show-word-limit
                     ></el-input>
                 </el-form-item>
             </el-form>
