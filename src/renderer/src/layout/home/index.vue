@@ -124,7 +124,7 @@ const toggle_menuIsCollapse = ()=>{
         flex-direction: column;
         width:65px;
         height: 100vh;
-        overflow: hidden;
+        
         background: #222b45;
         .aminui-side-split-top {height: 49px;-webkit-app-region: drag;}
         .aminui-side-split-top a {display: inline-block;width: 100%;height: 100%;display: flex;align-items: center;justify-content: center;}
