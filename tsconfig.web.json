@@ -53,6 +53,9 @@
       ],
       "@locales/*": [
         "src/renderer/src/locales/*"
+      ],
+      "@directives/*": [
+        "src/renderer/src/directives/*"
       ]
     }
   }

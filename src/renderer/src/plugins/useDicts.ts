@@ -17,6 +17,7 @@ export default function useDicts(app?: App) {
 
   async function getDicts(data: string[]) {
     const res = await queryBatch(data)
+    console.log(res);
     dicts.value = res.data
   }
 

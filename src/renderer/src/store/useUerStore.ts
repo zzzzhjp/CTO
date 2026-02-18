@@ -6,12 +6,14 @@ export const useUserStore = defineStore('userId',{
     state: ():{
         rolePerm:string,
         roles:Role[],
-        userInfo: Partial<IUserInfo>
+        userInfo: Partial<IUserInfo>,
+        permissions: string[]
     } => {
         return {
             roles:[],
             rolePerm:'',
-            userInfo:{}
+            userInfo:{},
+            permissions: [],
         }
     },
     getters:{},
@@ -21,6 +23,8 @@ export const useUserStore = defineStore('userId',{
             let {permissions, roles, units, userInfo } = res.data
             this.roles = roles
             this.rolePerm = roles[0].rolePerm
+
+            this.permissions = permissions
 
             this.userInfo = userInfo
         }

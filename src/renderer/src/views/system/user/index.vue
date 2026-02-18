@@ -116,7 +116,7 @@ import userDialog from './userDialog.vue'
 
 import { useDictsService } from '@plugins/useDicts'
 const { dicts, getDicts} = useDictsService()
-getDicts(['system_global_status','system_global_gender'])
+getDicts(['system_global_gender','system_global_status'])
 
 let roleForm =  reactive({
     current: '1',

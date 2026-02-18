@@ -24,6 +24,7 @@ export default defineConfig({
         '@layout': resolve('src/renderer/src/layout'),
         '@plugins': resolve('src/renderer/src/plugins'),
         '@locales': resolve('src/renderer/src/locales'),
+        '@directives': resolve('src/renderer/src/directives'),
       }
     },
     plugins: [

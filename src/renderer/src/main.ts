@@ -31,8 +31,12 @@ import i18n from '@locales/index'
 import pagination from '@components/Pagination/index.vue'
 app.component('pagination',pagination)
 
+//全局指令
+import { AuthDirectives } from '@directives/auths.directives'
+
 
 app
+    .directive(AuthDirectives.name, AuthDirectives)
     .use(pinia)
     .use(router)
     .use(ElementPlus)

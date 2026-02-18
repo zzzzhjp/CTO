@@ -13,6 +13,7 @@ interface DictsItem{
 
 export interface IDictsData {
     system_global_status:DictsItem[]
+    system_global_gender:DictsItem[]
 }
 
 export interface IDicts {
